@@ -1,0 +1,87 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --dusty-olive: rgb(90, 104, 72);
+  --black-forest: rgb(27, 48, 1);
+  --black-forest-2: rgb(39, 55, 3);
+  --black: rgb(5, 26, 1);
+  --cream: rgb(228, 231, 210);
+}
+
+
+
+body {
+  font-size: 30px;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background: url(../images/junglebg.jpg) center center/ cover no-repeat;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+nav {
+  min-width: 100%;
+  min-height: 75px;
+  text-align: center;
+
+}
+
+section {
+  display: flex;
+  flex-flow: column nowrap;
+  min-width: 400px;
+  min-height: 400px;
+  max-width: 800px;
+  margin: 20px 20px;
+  background: rgba(27, 48, 1, 0.12);
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
+  border-radius: 20px;
+  border: 1px solid rgba(27, 48, 1, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(90, 104, 72, 0.5),
+    inset 0 -1px 0 rgba(39, 59, 3, 0.1),
+    inset 0 0 22px 11px rgba(90,104,72, 1.1);
+  position: relative;
+  overflow: hidden;
+}
+
+section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(90,104,72, 0.8),
+      transparent);
+}
+
+section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg,
+      rgba(90,104,72, 0.8),
+      transparent,
+      rgba(39,59,3, 0.3));
+}
+
+h2,
+h4 {
+  width: 100%;
+  text-align: center;
+}
