@@ -190,7 +190,7 @@ function setTimer(){
        var pluralness = secondsLeft > 1? "s" : "";
         timerEl.textContent = secondsLeft + " second" + pluralness + " left"
 
-        if (secondsLeft >= 0 && clickCount >= questionArray.length) {
+        if (secondsLeft >= 0 && clickCount >= 10) {
 
             playerWon();
             clearInterval(timeInterval);
@@ -231,4 +231,64 @@ for (i = 0; i < ansElArray.length; i++){
     ansElArray[i].addEventListener("click", checkAnswer);
 
     ansElArray[i].addEventListener("click", renderQnAs);
+}
+
+function checkAnswer(event){
+    event.stopPropagation();
+
+    var selected = event.currentTarget;
+        
+    clickCount+= 1;
+
+    if(selected.textContent === currentQ.correct){
+        score += 10;
+        secondsLeft += 2;
+
+        validator.textContent = "The odds appear in your favor. Score = " + score;
+    } else {
+        score -= 5;
+        secondsLeft -= 3;
+
+        validator.textContent = "The odds ARE NOT in your favor. Score = " + score;
+    }
+}
+
+function playerWon(){
+    //first let the player know they've completed the game w/ a lil pop-up
+    alert("Congratulations! You Win! Your score is " + score);
+
+    //pull the scores uno mas
+     var hsRetr = JSON.parse(localStorage.getItem("scoreList"));
+
+     //check to see if players current score is higher than the last element in the retreived high scores array
+
+     if( score > hsRetr[hsRetr.length-1].score){
+        
+        submitHS = confirm("Submit your score to the leaderboard?");
+     }
+
+     if (submitHS){
+
+        //if player chooses to submit, grab initials and score and store them in object matching items in scoresArray
+        var initials = prompt("What are your initials?")
+
+        var submission = {
+            score: score,
+            initials: initials
+        };
+
+        hsRetr.push(submission);
+
+        //the sort below puts the lowest score at index 0 and highest in last place
+        hsRetr.sort((a,b) => a.score - b.score);
+        //reverse the order of the array
+        hsRetr.reverse();
+        //remove the lowest score from the array which is in the last index spot.
+        hsRetr.pop()
+
+        localStorage.setItem("scoreList", JSON.stringify(hsRetr));
+    //you want to recall the function because after setting the scores to local storage,
+    //you still need them pulled into the page.
+    retrHS();
+     }
 }
